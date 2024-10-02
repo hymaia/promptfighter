@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "concurrently \"npm run build\" \"npm run watch\""
   },
   "keywords": [],
   "author": "",
@@ -18,9 +20,11 @@
     "@babel/preset-env": "^7.25.4",
     "autoprefixer": "^10.4.20",
     "babel-loader": "^9.2.1",
+    "concurrently": "^9.0.1",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
+    
   }
 }

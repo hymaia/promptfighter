@@ -1,39 +1,34 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInAnonymously } from 'firebase/auth';
+// Import all necessary functions from your JS files
+import { handleAuthFormSubmission } from './auth.js';
+import { signInAnonymouslyAndGetUser, addUserToFirestore } from './firebase.js';
+import './game.js';         // Import game logic
+import './scoreboard.js';   // Import scoreboard logic
+import './vote.js';         // Import voting logic
+import './ui.js';           // Import UI handling logic
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Initialization function to set up the app
+async function init() {
+    try {
+        // Initialize the authentication flow
+        handleAuthFormSubmission();
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBuOAFK7UU5OOCMCTW3sgS6i6iE38UPIWg",
-  authDomain: "prompt-fighter.firebaseapp.com",
-  databaseURL: "https://prompt-fighter-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "prompt-fighter",
-  storageBucket: "prompt-fighter.appspot.com",
-  messagingSenderId: "685708643563",
-  appId: "1:685708643563:web:95af0cfba988a6755c82ae",
-  measurementId: "G-Y1B6XWQQVG"
-};
+        // Sign in the user anonymously and get the user object
+        const user = await signInAnonymouslyAndGetUser();
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
+        // Check if the user was successfully signed in
+        if (user) {
+            // You can modify the username as needed
+            const username = 'AnonymousUser'; 
+            await addUserToFirestore(user.uid, username); // Add user to Firestore
+            console.log("User added to Firestore successfully.");
+        }
 
-// function to sign in a user anonymously
-signInAnonymously(auth)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log("User signed in anonymously:", user);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error("Error signing in anonymously:", errorCode, errorMessage);
-  });
+        // Any other app initialization logic can go here (e.g., screen rendering)
+        console.log("App initialized successfully.");
+    } catch (error) {
+        console.error("Error during app initialization:", error);
+    }
+}
 
+// Call the init function to start the app
+init();
