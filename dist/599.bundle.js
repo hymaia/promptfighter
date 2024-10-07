@@ -1,0 +1,1 @@
+(self.webpackChunkpromptfighter=self.webpackChunkpromptfighter||[]).push([[599],{599:()=>{console.log("hello"),document.addEventListener("DOMContentLoaded",(function(){const e=localStorage.getItem("modelImageUrl"),t=document.getElementById("modelImage");t&&e&&(t.src=e)}))}}]);

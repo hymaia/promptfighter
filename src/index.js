@@ -1,10 +1,12 @@
 // Import all necessary functions from your JS files
 import { handleAuthFormSubmission } from './auth.js';
 import { signInAnonymouslyAndGetUser, addUserToFirestore } from './firebase.js';
-import './game.js';         // Import game logic
+import './onboarding.js'; 
+import './game.js'; 
 import './scoreboard.js';   // Import scoreboard logic
 import './vote.js';         // Import voting logic
-import './ui.js';           // Import UI handling logic
+
+
 
 // Initialization function to set up the app
 async function init() {
